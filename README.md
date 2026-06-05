@@ -98,16 +98,6 @@ NIM-tugas-UAS/
 
 ---
 
-## 🌐 Deploy ke Render.com
-
-1. Push ke GitHub repository
-2. Buka [render.com](https://render.com) → New Web Service
-3. Connect GitHub repo
-4. Render otomatis membaca `render.yaml`
-5. Tunggu deploy selesai (~5-10 menit)
-
----
-
 ## 📊 API Endpoints
 
 | Method | Endpoint      | Deskripsi                    |

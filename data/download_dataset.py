@@ -1,13 +1,3 @@
-"""
-Script untuk mendownload dataset hukum Indonesia dari HuggingFace
-Dataset: biznetgio/indonesia-law-qa-embeddings
-Jalankan script ini SEKALI sebelum menjalankan aplikasi utama.
-
-Cara pakai:
-    pip install datasets pandas
-    python download_dataset.py
-"""
-
 from datasets import load_dataset
 import pandas as pd
 import os

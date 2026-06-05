@@ -201,8 +201,10 @@ function createResultCard(doc, index) {
   card.className = "result-card";
   card.style.animationDelay = `${index * 0.05}s`;
 
-  // Potong summarize jika terlalu panjang
-  const summary = truncateText(doc.summarize || doc.answer_preview || "", 220);
+  // Bersihkan teks jawaban dari sisa style MS Word / CSS
+  const rawAnswer = doc.summarize || doc.answer_preview || "";
+  const cleanedSummaryText = cleanAnswerText(rawAnswer);
+  const summary = truncateText(cleanedSummaryText, 220);
 
   // Format URL sumber menjadi lebih pendek
   const sourceShort = formatSourceUrl(doc.source || "");
@@ -241,7 +243,7 @@ function createResultCard(doc, index) {
       ` : '<span></span>'}
       <div class="footer-actions">
         <button class="card-expand-btn btn-secondary" onclick="toggleAnswer(this)">
-          Lihat Jawaban Lengkap &darr;
+          Lihat Lengkap Ringkasan &darr;
         </button>
         ${doc.source ? `
           <a href="${escapeHtml(doc.source)}" target="_blank" rel="noopener" class="card-expand-btn" style="text-decoration: none;">
@@ -251,7 +253,7 @@ function createResultCard(doc, index) {
       </div>
     </div>
     <div class="card-full-answer">
-      ${escapeHtml(doc.answer_preview || "")}
+      ${escapeHtml(cleanAnswerText(doc.answer_preview || ""))}
     </div>
   `;
 
@@ -265,7 +267,7 @@ function toggleAnswer(btn) {
 
   if (isOpen) {
     answerDiv.classList.remove("open");
-    btn.innerHTML = "Lihat Jawaban Lengkap &darr;";
+    btn.innerHTML = "Lihat Lengkap Ringkasan &darr;";
   } else {
     answerDiv.classList.add("open");
     btn.innerHTML = "Sembunyikan Jawaban &uarr;";
@@ -376,4 +378,41 @@ function formatSourceUrl(url) {
   } catch {
     return url.slice(0, 60);
   }
+}
+
+/**
+ * Membersihkan teks jawaban dari sisa-sisa style sheet, font definitions,
+ * dan komentar CSS/HTML bawaan MS Word / Hukumonline.
+ */
+function cleanAnswerText(text) {
+  if (!text) return "";
+  
+  let cleaned = text;
+  
+  // Hapus komentar HTML
+  cleaned = cleaned.replace(/<!--[\s\S]*?-->/g, "");
+  
+  // Hapus elemen <style>...</style> beserta isinya jika ada
+  cleaned = cleaned.replace(/<style[\s\S]*?<\/style>/gi, "");
+  
+  // Hapus komentar CSS /* ... */
+  cleaned = cleaned.replace(/\/\*[\s\S]*?\*\//g, "");
+  
+  // Hapus deklarasi aturan CSS seperti @font-face { ... }
+  cleaned = cleaned.replace(/@[a-zA-Z\-]+\b[^{]*\{[^}]*\}/g, "");
+  
+  // Hapus deklarasi selector CSS seperti class atau tag { ... }
+  cleaned = cleaned.replace(/[a-zA-Z0-9\.\#\s\-:\@]+\{[^}]*\}/g, "");
+  
+  // Bersihkan sisa kurung kurawal atau karakter @ yang terlepas
+  cleaned = cleaned.replace(/\{[^}]*\}/g, "");
+  cleaned = cleaned.replace(/@[a-zA-Z\-]+/g, "");
+  
+  // Hapus entitas &nbsp; HTML menjadi spasi biasa
+  cleaned = cleaned.replace(/&nbsp;/gi, " ");
+  
+  // Hapus baris kosong beruntun agar rapi
+  cleaned = cleaned.replace(/\n\s*\n+/g, "\n\n").trim();
+  
+  return cleaned;
 }

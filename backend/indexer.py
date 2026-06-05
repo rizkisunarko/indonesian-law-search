@@ -1,20 +1,3 @@
-"""
-indexer.py - Membangun index BM25 dan Dense Embedding untuk Hybrid Search
-
-Proses:
-1. Load dataset CSV
-2. Preprocessing teks (tokenisasi untuk BM25)
-3. Build BM25 index menggunakan rank_bm25
-4. Build Dense index menggunakan sentence-transformers
-5. Simpan index ke file (.pkl dan .npy) agar tidak perlu hitung ulang
-
-Library:
-- rank_bm25     : untuk BM25 scoring
-- sentence-transformers : untuk dense embedding (semantic search)
-- numpy         : operasi matrix embedding
-- pickle        : simpan/load index BM25
-"""
-
 import os
 import re
 import pickle

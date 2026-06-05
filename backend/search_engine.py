@@ -1,20 +1,3 @@
-"""
-search_engine.py - Logika Hybrid Search (BM25 + Dense Retrieval)
-
-Cara kerja Hybrid Search:
-1. BM25 Score   : hitung skor berbasis kata kunci (lexical matching)
-2. Dense Score  : hitung skor berbasis kesamaan semantik (embedding cosine similarity)
-3. Hybrid Score : gabungkan kedua skor dengan formula:
-                  hybrid = (alpha * dense_score) + ((1 - alpha) * bm25_score)
-   - alpha = 0.6 artinya dense lebih dominan (lebih semantik)
-   - alpha bisa diatur sesuai kebutuhan
-
-Kenapa Hybrid?
-- BM25 bagus untuk query spesifik (nama UU, nomor pasal)
-- Dense bagus untuk query bahasa sehari-hari ("aturan soal pecat karyawan")
-- Gabungan keduanya memberikan hasil yang lebih akurat
-"""
-
 import re
 import numpy as np
 from rank_bm25 import BM25Okapi

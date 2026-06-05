@@ -1,17 +1,3 @@
-"""
-main.py - FastAPI Backend untuk Search Engine Hukum Indonesia
-
-Endpoint:
-- GET  /             : redirect ke frontend
-- GET  /api/health   : cek status server
-- POST /api/search   : endpoint utama pencarian
-- GET  /api/stats    : statistik dataset
-
-Cara menjalankan:
-    pip install -r requirements.txt
-    python -m uvicorn main:app --reload --port 8000
-"""
-
 import os
 import sys
 # Tambahkan folder backend ke path pencarian modul Python agar import lokal berjalan lancar
