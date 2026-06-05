@@ -75,25 +75,38 @@ http://localhost:8000
 ## 📁 Struktur File
 
 ```
-NIM-tugas-UAS/
-├── dataset_link.txt          # Link Google Drive dataset
+indonesian-law-search/
+├── dataset_link.txt          # Link dataset
 ├── README.md                 # Panduan ini
 ├── render.yaml               # Konfigurasi deploy Render
 │
 ├── data/
-│   ├── download_dataset.py   # Script download dataset dari HuggingFace
-│   └── hukum_indonesia.csv   # Dataset (di-generate oleh download_dataset.py)
+│   └── download_dataset.py   # Script download dataset dari HuggingFace
 │
 ├── backend/
 │   ├── main.py               # FastAPI application
 │   ├── search_engine.py      # Logika Hybrid Search
 │   ├── indexer.py            # Build & load BM25 + Dense index
-│   └── requirements.txt      # Library Python
+│   ├── requirements.txt      # Library Python
+│   ├── bm25_index.pkl        # Index BM25 (hasil build)
+│   ├── embeddings.npy        # Dense embeddings (hasil build)
+│   └── documents.pkl         # Metadata dokumen (hasil build)
 │
-└── frontend/
-    ├── index.html            # Halaman utama UI
-    ├── style.css             # Styling
-    └── app.js                # Logic JavaScript
+├── frontend/
+│   ├── index.html            # Halaman utama UI
+│   ├── results.html          # Halaman hasil pencarian
+│   ├── style.css             # Styling
+│   ├── app.js                # Logic JavaScript
+│   └── assets/
+│       └── gambar.png        # Asset gambar frontend
+│
+└── docs/                     # Versi static site
+    ├── index.html
+    ├── results.html
+    ├── style.css
+    ├── app.js
+    └── assets/
+        └── gambar.png
 ```
 
 ---
