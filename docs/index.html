@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LexSearch — Pencarian Hukum Indonesia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── HERO SECTION ─────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="grid-lines"></div>
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+    </div>
+
+    <nav class="navbar">
+      <div class="logo">
+        <span class="logo-icon">⚖</span>
+        <span class="logo-text">LexSearch</span>
+      </div>
+      <div class="nav-links" aria-label="Status Pencarian">
+        <span class="nav-badge">Hybrid Search · BM25 + Dense</span>
+      </div>
+    </nav>
+ 
+    <div class="hero-shell">
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-watermark">LEX</div>
+        <div class="statue-glow"></div>
+        <img class="statue-img" src="assets/gambar.png" alt="" />
+      </div>
+ 
+      <div class="hero-copy">
+        <div class="hero-kicker">PORTAL HUKUM TERPADU</div>
+        <h1 class="hero-title">
+          Temukan Keadilan<br/>
+          Lewat Presisi
+        </h1>
+ 
+        <div class="search-wrapper">
+          <div class="search-box" id="search-box">
+            <span class="search-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </span>
+            <input
+              type="text"
+              id="search-input"
+              class="search-input"
+              placeholder="Masukkan kata kunci, pertanyaan hukum, atau topik kasus..."
+              autocomplete="off"
+            />
+            <button class="search-btn" id="search-btn" onclick="navigateToResults()">
+              Cari Sekarang
+            </button>
+          </div>
+ 
+          <div class="suggestions">
+            <button class="suggestion-chip" onclick="setQuery('Hak Cipta')">Hak Cipta</button>
+            <button class="suggestion-chip" onclick="setQuery('Sengketa Tanah')">Sengketa Tanah</button>
+            <button class="suggestion-chip" onclick="setQuery('Ketenagakerjaan')">Ketenagakerjaan</button>
+            <button class="suggestion-chip" onclick="setQuery('Pencemaran Nama Baik')">Pencemaran Nama Baik</button>
+          </div>
+ 
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ── RESULTS SECTION ──────────────────────────────────────── -->
+  <section class="results-section" id="results-section">
+    <div class="container">
+
+      <!-- Results header: judul + controls (alpha, top-k) -->
+      <div class="results-header" id="results-header" style="display:none">
+        <div class="results-left">
+          <h2 id="results-title">Hasil Pencarian</h2>
+          <div id="results-subtitle" class="results-subtitle">&nbsp;</div>
+        </div>
+        <div class="results-controls">
+          <label class="ctrl-label">Alpha weight</label>
+          <input id="alpha" type="range" min="0" max="100" value="60" oninput="updateAlpha(this.value)" />
+          <div class="alpha-val" id="alpha-val">0.60</div>
+
+          <label class="ctrl-label">Top-k results</label>
+          <select id="top-k" onchange="updateTopK(this.value)">
+            <option value="5">5 Hasil</option>
+            <option value="10" selected>10 Hasil</option>
+            <option value="25">25 Hasil</option>
+            <option value="50">50 Hasil</option>
+          </select>
+        </div>
+      </div>
+ 
+      <!-- Status bar -->
+      <div class="status-bar" id="status-bar" style="display:none">
+        <div class="status-info">
+          <span id="status-query"></span>
+          <span id="status-count"></span>
+          <span id="status-time"></span>
+        </div>
+        <div class="score-legend">
+          <span class="legend-dot dot-hybrid"></span>Hybrid
+          <span class="legend-dot dot-dense"></span>Semantik
+          <span class="legend-dot dot-bm25"></span>BM25
+        </div>
+      </div>
+ 
+      <!-- Loading state -->
+      <div class="loading-state" id="loading-state" style="display:none">
+        <div class="loading-spinner"></div>
+        <p>Mencari dengan Hybrid Search...</p>
+      </div>
+ 
+      <!-- Error state -->
+      <div class="error-state" id="error-state" style="display:none">
+        <span class="error-icon">⚠</span>
+        <p id="error-msg">Terjadi kesalahan.</p>
+      </div>
+ 
+      <!-- Empty state -->
+      <div class="empty-state" id="empty-state" style="display:none">
+        <span class="empty-icon">🔍</span>
+        <p>Tidak ada hasil ditemukan untuk query tersebut.</p>
+      </div>
+ 
+      <!-- Results list -->
+      <div class="results-list" id="results-list"></div>
+ 
+    </div>
+  </section>
+ 
+  <!-- ── FOOTER ────────────────────────────────────────────────── -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <span>⚖ LexSearch · Oleh: 24-181 Rizki Pratama Sunarko</span>
+      <span>Dataset: HuggingFace · biznetgio/indonesia-law-qa-embeddings</span>
+      <span>Metode: Hybrid Search (BM25 + Dense Retrieval)</span>
+      <span>Mata Kuliah: Temu Kembali Informasi</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
