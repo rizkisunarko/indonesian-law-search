@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LexSearch — Hasil Pencarian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="results-page">
+  <nav class="navbar results-navbar">
+    <div class="navbar-left">
+      <a href="index.html" class="logo">
+        <span class="logo-text">LexSearch</span>
+      </a>
+      <div class="nav-links" aria-label="Navigasi utama">
+        <a href="index.html" class="nav-link">Beranda</a>
+        <a href="#results-section" class="nav-link active">Pencarian</a>
+      </div>
+    </div>
+    <div class="search-top">
+      <div class="search-box-navbar" id="search-box-top">
+        <input type="text" id="search-input" class="search-input-navbar" placeholder="Pelanggaran Kontrak Kerja" autocomplete="off" />
+        <button class="search-btn-navbar" id="search-btn" onclick="doSearch()" aria-label="Cari">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="results-main">
+    <div class="results-inner">
+
+    <!-- Results header -->
+    <div class="results-header" id="results-header">
+      <div class="results-left">
+        <h2 id="results-title">Hasil Pencarian</h2>
+        <div id="results-subtitle" class="results-subtitle">&nbsp;</div>
+      </div>
+      <div class="controls-box">
+        <div class="controls-col">
+          <div class="controls-row" style="justify-content: space-between; gap: 20px;">
+            <label class="ctrl-label">ALPHA WEIGHT</label>
+            <div class="alpha-val" id="alpha-val">0.60</div>
+          </div>
+          <input id="alpha" type="range" min="0" max="100" value="60" oninput="updateAlpha(this.value)" />
+        </div>
+        <div class="controls-col">
+          <label class="ctrl-label" style="margin-bottom: 6px;">TOP-K RESULTS</label>
+          <select id="top-k" onchange="updateTopK(this.value)">
+            <option value="5">5 Hasil</option>
+            <option value="10">10 Hasil</option>
+            <option value="25" selected>25 Hasil</option>
+            <option value="50">50 Hasil</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <section class="results-section" id="results-section">
+        <div class="status-bar" id="status-bar" style="display:none">
+          <div class="status-info">
+            <span id="status-query"></span>
+            <span id="status-count"></span>
+            <span id="status-time"></span>
+          </div>
+          <div class="score-legend">
+            <span class="legend-dot dot-hybrid"></span>Hybrid
+            <span class="legend-dot dot-dense"></span>Semantik
+            <span class="legend-dot dot-bm25"></span>BM25
+          </div>
+        </div>
+
+        <div class="loading-state" id="loading-state" style="display:none">
+          <div class="loading-spinner"></div>
+          <p>Mencari dengan Hybrid Search...</p>
+        </div>
+
+        <div class="error-state" id="error-state" style="display:none">
+          <span class="error-icon">⚠</span>
+          <p id="error-msg">Terjadi kesalahan.</p>
+        </div>
+
+        <div class="empty-state" id="empty-state" style="display:none">
+          <span class="empty-icon">🔍</span>
+          <p>Tidak ada hasil ditemukan untuk query tersebut.</p>
+        </div>
+
+        <div class="results-list" id="results-list"></div>
+
+    </section>
+    </div>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <span>⚖ LexSearch · Oleh: 24-181 Rizki Pratama Sunarko</span>
+      <span>Dataset: HuggingFace · biznetgio/indonesia-law-qa-embeddings</span>
+      <span>Metode: Hybrid Search (BM25 + Dense Retrieval)</span>
+      <span>Mata Kuliah: Temu Kembali Informasi</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

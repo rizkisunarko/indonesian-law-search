@@ -1,0 +1,15 @@
+# render.yaml — Konfigurasi deploy ke Render.com
+# Upload file ini ke root repository kamu
+
+services:
+  - type: web
+    name: lexsearch-hukum-indonesia
+    env: python
+    buildCommand: |
+      pip install -r backend/requirements.txt &&
+      python data/download_dataset.py &&
+      python backend/indexer.py
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"

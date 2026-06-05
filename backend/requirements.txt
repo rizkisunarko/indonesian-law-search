@@ -1,0 +1,18 @@
+# Search Engine - Requirements
+# Install dengan: pip install -r requirements.txt
+
+# Web framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.6
+
+# Search engine core
+rank-bm25>=0.2.2
+sentence-transformers>=3.1.1
+
+# Dataset & data processing
+datasets>=3.0.1
+pandas>=2.2.3
+numpy>=1.26.4
+
+# Utilities
+python-multipart>=0.0.12

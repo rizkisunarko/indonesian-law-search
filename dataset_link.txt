@@ -1,0 +1,15 @@
+LINK DATASET - TUGAS UAS SEARCH ENGINE
+======================================
+
+Nama Dataset : Hukum Indonesia QA (dari HuggingFace)
+Sumber Asli  : https://huggingface.co/datasets/biznetgio/indonesia-law-qa-embeddings
+
+Link Google Drive Dataset (CSV):
+[ISI LINK GOOGLE DRIVE KAMU DI SINI SETELAH UPLOAD]
+
+Cara upload ke Google Drive:
+1. Jalankan: python data/download_dataset.py
+2. File CSV tersimpan di: data/hukum_indonesia.csv
+3. Upload file tersebut ke Google Drive
+4. Klik kanan → Share → Anyone with link → Copy link
+5. Ganti teks "[ISI LINK...]" di atas dengan link tersebut
