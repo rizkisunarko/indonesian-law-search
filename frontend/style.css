@@ -1381,29 +1381,44 @@ body {
 /* ── RESPONSIVE ───────────────────────────────────────── */
 @media (max-width: 640px) {
   .navbar {
-    padding: 16px 20px;
+    padding: 14px 16px;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    width: 100%;
+  }
+
+  .logo-text {
+    font-size: 20px;
   }
 
   .nav-links {
     order: 3;
     width: 100%;
-    gap: 14px;
+    gap: 10px;
+    justify-content: flex-start;
   }
 
   .nav-badge {
     order: 2;
+    width: 100%;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.4;
   }
 
   .hero-shell {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 12px 16px 36px;
+    gap: 18px;
+    padding: 12px 16px 28px;
   }
 
   .hero-visual {
-    min-height: 420px;
+    min-height: 300px;
     order: 1;
   }
 
@@ -1415,39 +1430,46 @@ body {
   }
 
   .hero-copy .hero-title {
-    font-size: clamp(38px, 11vw, 56px);
+    font-size: clamp(34px, 11vw, 54px);
+    margin-bottom: 18px;
   }
 
   .hero-watermark {
-    left: 0;
-    top: 46%;
-    font-size: clamp(72px, 28vw, 120px);
+    left: 50%;
+    top: 44%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(64px, 26vw, 112px);
   }
 
   .statue-img {
-    max-height: 320px;
+    max-height: 260px;
     margin: 0 auto;
     filter: drop-shadow(0 12px 24px rgba(185, 92, 47, 0.18));
   }
 
   .search-box {
-    padding: 9px;
+    padding: 10px;
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+    border-radius: 18px;
   }
 
   .search-input {
     width: 100%;
-    padding: 8px 0 2px;
+    padding: 6px 0 2px;
+    font-size: 14px;
   }
 
   .search-btn {
     width: 100%;
     min-width: 0;
+    padding: 13px 18px;
   }
 
   .suggestions {
     justify-content: flex-start;
+    margin-top: 18px;
   }
 
   .advanced-row {
@@ -1462,6 +1484,7 @@ body {
   .footer .container {
     flex-direction: column;
     text-align: center;
+    gap: 8px;
   }
 
   .card-header {
@@ -1470,25 +1493,46 @@ body {
 
   .status-bar {
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .results-list {
+    gap: 14px;
   }
 
   /* results page */
   .results-page .results-inner {
-    padding: 16px 16px 0;
+    padding: 14px 14px 0;
   }
 
   .results-page .results-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
   }
 
   .results-page .controls-box {
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .results-page .controls-col,
+  .results-page .controls-row {
+    width: 100%;
+  }
+
+  .results-page .controls-row {
+    justify-content: space-between;
   }
 
   .results-page #alpha {
+    width: 100%;
+  }
+
+  .results-page #top-k {
     width: 100%;
   }
 
@@ -1499,7 +1543,7 @@ body {
   }
 
   .results-page .navbar {
-    justify-content: center;
+    align-items: flex-start;
   }
 
   .results-page .navbar .search-top {
@@ -1513,8 +1557,13 @@ body {
     width: 100%;
   }
 
+  .results-page .status-bar {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+
   .results-page .result-card {
-    padding: 18px 16px;
+    padding: 18px 14px;
   }
 
   .results-page .card-header {
@@ -1529,32 +1578,65 @@ body {
     position: static;
     margin-bottom: 10px;
     flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .results-page .score-badge {
+    font-size: 9px;
+    padding: 5px 8px;
   }
 
   .results-page .card-title {
-    font-size: 21px;
+    font-size: 20px;
+  }
+
+  .results-page .card-subtitle {
+    margin-bottom: 10px;
+  }
+
+  .results-page .card-summary .lead {
+    padding: 10px 12px;
+  }
+
+  .results-page .card-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .results-page .footer-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .results-page .card-expand-btn {
     float: none;
     width: 100%;
   }
+
+  .results-page .card-source {
+    white-space: normal;
+  }
+
+  .results-page .footer .container {
+    gap: 6px;
+  }
 }
 
 @media (min-width: 641px) and (max-width: 1100px) {
   .hero-shell {
     grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 18px 28px 40px;
+    gap: 24px;
+    padding: 18px 28px 32px;
   }
 
   .hero-visual {
-    min-height: 560px;
+    min-height: 420px;
   }
 
   .hero-copy {
     max-width: 680px;
-    padding-top: 68px;
+    padding-top: 24px;
   }
 
   .results-page .results-inner {
@@ -1564,11 +1646,13 @@ body {
   .results-page .results-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
   }
 
   .results-page .controls-box {
     width: 100%;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .results-page .navbar {

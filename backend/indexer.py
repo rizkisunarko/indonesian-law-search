@@ -23,7 +23,7 @@ def preprocess_text(text: str) -> list[str]:
     """
     Preprocessing teks untuk BM25:
     - Lowercase
-    - Hapus karakter non-alfanumerik
+    - Untuk menghapus karakter non-alfanumerik
     - Tokenisasi sederhana (split by whitespace)
     """
     text = text.lower()
