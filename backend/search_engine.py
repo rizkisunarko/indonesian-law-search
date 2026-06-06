@@ -11,6 +11,47 @@ def preprocess_text(text: str) -> list[str]:
     return text.split()
 
 
+def clean_answer_text(text: str) -> str:
+    """
+    Membersihkan teks jawaban dari sisa-sisa style sheet, font definitions,
+    dan komentar CSS/HTML bawaan MS Word / Hukumonline.
+    """
+    if not text or not isinstance(text, str):
+        return ""
+    
+    cleaned = text
+    
+    # 1. Hapus komentar HTML <!-- ... -->
+    cleaned = re.sub(r"<!--[\s\S]*?-->", "", cleaned)
+    
+    # 2. Hapus elemen <style>...</style> beserta isinya jika ada
+    cleaned = re.sub(r"<style[\s\S]*?</style>", "", cleaned, flags=re.IGNORECASE)
+    
+    # 3. Hapus komentar CSS /* ... */
+    cleaned = re.sub(r"/\*[\s\S]*?\*/", "", cleaned)
+    
+    # 4. Hapus deklarasi aturan CSS seperti @font-face { ... }
+    cleaned = re.sub(r"@[a-zA-Z\-]+\b[^{]*\{[^}]*\}", "", cleaned)
+    
+    # 5. Hapus deklarasi selector CSS seperti class atau tag { ... }
+    cleaned = re.sub(r"[a-zA-Z0-9\.\#\s\-:\@]+\{[^}]*\}", "", cleaned)
+    
+    # 6. Bersihkan sisa kurung kurawal atau karakter @ yang terlepas
+    cleaned = re.sub(r"\{[^}]*\}", "", cleaned)
+    cleaned = re.sub(r"@[a-zA-Z\-]+", "", cleaned)
+    
+    # 7. Hapus entitas &nbsp; HTML menjadi spasi biasa
+    cleaned = re.sub(r"&nbsp;", " ", cleaned, flags=re.IGNORECASE)
+    
+    # 8. Hapus label ULASAN LENGKAP di awal teks
+    cleaned = re.sub(r"^ULASAN LENGKAP\s*[:.-]*\s*", "", cleaned, flags=re.IGNORECASE)
+    
+    # 9. Hapus baris kosong beruntun agar rapi
+    cleaned = re.sub(r"\n\s*\n+", "\n\n", cleaned)
+    
+    return cleaned.strip()
+
+
 def hybrid_search(
     query: str,
     bm25: BM25Okapi,
@@ -92,12 +133,13 @@ def hybrid_search(
         doc["dense_score"]   = round(float(dense_scores_norm[idx]), 4)
         doc["rank"]          = rank + 1
 
-        # Potong field 'answer' agar tidak terlalu panjang di response API
-        # Frontend akan tampilkan ringkasan (summarize), bukan full answer
-        if "answer" in doc and len(str(doc["answer"])) > 500:
-            doc["answer_preview"] = str(doc["answer"])[:500] + "..."
+        # Bersihkan dan potong field 'answer' agar tidak terlalu panjang di response API
+        raw_answer = doc.get("answer", "")
+        clean_ans = clean_answer_text(raw_answer)
+        if len(clean_ans) > 800:
+            doc["answer_preview"] = clean_ans[:800] + "..."
         else:
-            doc["answer_preview"] = doc.get("answer", "")
+            doc["answer_preview"] = clean_ans
 
         results.append(doc)
 

@@ -213,7 +213,13 @@ function createResultCard(doc, index) {
   card.innerHTML = `
     <div class="card-header">
       <div class="card-title-group">
-        <h3 class="card-title">${escapeHtml(doc.title || "Tanpa Judul")}</h3>
+        <h3 class="card-title">
+          ${doc.source ? `
+            <a href="${escapeHtml(doc.source)}" target="_blank" rel="noopener" class="card-title-link">
+              ${escapeHtml(doc.title || "Tanpa Judul")}
+            </a>
+          ` : escapeHtml(doc.title || "Tanpa Judul")}
+        </h3>
         <div class="card-subtitle">${escapeHtml(subtitleText)}</div>
       </div>
     </div>
@@ -253,6 +259,7 @@ function createResultCard(doc, index) {
       </div>
     </div>
     <div class="card-full-answer">
+      ${doc.source ? `<a href="${escapeHtml(doc.source)}" target="_blank" rel="noopener" class="ulasan-lengkap-link"><strong>Ulasan Lengkap di Hukumonline ↗</strong></a><br/><br/>` : ''}
       ${escapeHtml(cleanAnswerText(doc.answer_preview || ""))}
     </div>
   `;

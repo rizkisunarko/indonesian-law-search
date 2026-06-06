@@ -1126,6 +1126,29 @@ body {
   display: block;
 }
 
+.card-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.card-title-link:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ulasan-lengkap-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.ulasan-lengkap-link:hover {
+  color: var(--accent-dim);
+  text-decoration: underline;
+}
+
 .card-footer {
   display: flex;
   align-items: center;
